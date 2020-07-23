@@ -13,17 +13,26 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-# Локализированные маршруты
+// Локализированные маршруты
 Route::group([
     'prefix' => LaravelLocalization::setLocale(),
     'middleware' => [
         'localeSessionRedirect',
         'localizationRedirect'
     ]], function () {
-
+        // Маршруты авторизации
         Auth::routes();
 
+        // Маршруты защищенные аутентификацией
         Route::middleware(['auth'])->group(function () {
+            
+            // Точка входа в приложение
             Route::get('/', 'ShowDashboard')->name('dashboard');
+            
+            // Управление разделом Отделы (App\Models\Departament)
+            Route::resource('departaments', 'DepartamentController');
+
+            // Управление разделом Пользователи (App\User)
+            Route::resource('users', 'UserController');
         });
 });

@@ -36,4 +36,9 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    // Отделы в которые входит пользователь
+    public function departaments(){
+        return $this->belongsToMany('App\Models\Departament');
+    }
 }
