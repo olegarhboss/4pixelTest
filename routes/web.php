@@ -18,8 +18,12 @@ Route::group([
     'prefix' => LaravelLocalization::setLocale(),
     'middleware' => [
         'localeSessionRedirect',
-        'localizationRedirect',
-        //'ServerPush'
+        'localizationRedirect'
     ]], function () {
 
+        Auth::routes();
+
+        Route::middleware(['auth'])->group(function () {
+            Route::get('/', 'ShowDashboard')->name('dashboard');
+        });
 });
