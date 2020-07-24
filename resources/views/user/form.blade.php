@@ -36,7 +36,7 @@
 
             <div class="form-group">
                 <label for="exampleInputPassword2">@lang('passwords.confirm_password')</label>
-                <input type="password" name="password-confirm" @if (!isset($user)) required @endif class="form-control form-control-lg" placeholder="@lang('dashboard.password_placeholder')" id="exampleInputPassword2">
+                <input type="password" name="password_confirmation" @if (!isset($user)) required @endif class="form-control form-control-lg" placeholder="@lang('dashboard.password_placeholder')" id="exampleInputPassword2">
             </div>
 
 
