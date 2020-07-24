@@ -3,7 +3,10 @@
 @section('content')
 <div class="container">
     <div class="card">
-        <div class="card-header"><h2 class="float-left">@isset($departament){{ $departament->name }}@else @lang('dashboard.new_departament') @endisset</h2></div>
+        <div class="card-header">
+            <h2 class="float-left">@isset($departament){{ $departament->name }}@else @lang('dashboard.new_departament') @endisset</h2>
+        </div>
+        
         <div class="card-body">
             @isset($departament)
                 <form action={{ route('departaments.update', $departament->id) }} enctype="multipart/form-data" method=POST>

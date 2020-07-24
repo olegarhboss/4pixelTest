@@ -16,6 +16,12 @@ return [
     'delete' => 'Delete',
     'save' => 'Save',
 
+    'new_user' => 'New User',
+    'user_name' => 'User name',
+    'user_name_placeholder' => 'Enter username',
+    'email_placepolder' => 'Enter user email',
+    'password_placeholder' => 'Enter password',
+
     'logo' => 'Logo',
     'select_logo' => 'Select a logo file',
 

@@ -30,9 +30,9 @@ Route::group([
             Route::get('/', 'ShowDashboard')->name('dashboard');
             
             // Управление разделом Отделы (App\Models\Departament)
-            Route::resource('departaments', 'DepartamentController');
+            Route::resource('departaments', 'DepartamentController')->except('show');
 
             // Управление разделом Пользователи (App\User)
-            Route::resource('users', 'UserController');
+            Route::resource('users', 'UserController')->except('show');
         });
 });

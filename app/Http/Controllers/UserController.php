@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\User;
 //use Illuminate\Http\Request;
-
 use App\Http\Requests\StoreUser;
 use App\Http\Requests\UpdateUser;
 
@@ -17,7 +16,7 @@ class UserController// extends Controller
      */
     public function index()
     {
-        //
+        return view('user.index', ['users' => User::paginate(10)]);
     }
 
     /**
@@ -27,7 +26,7 @@ class UserController// extends Controller
      */
     public function create()
     {
-        //
+        return view('user.form');
     }
 
     /**
@@ -38,7 +37,15 @@ class UserController// extends Controller
      */
     public function store(StoreUser $request)
     {
-        //
+        // Создание нового Пользователя
+        $user = User::create([
+            'name' => $request->name,
+            'email' => $request->email,
+            'password' => bcrypt($request->password)
+        ]);
+
+        // Перенаправление на индексную страницу с уведомление об успешном добавлении
+        return redirect()->route('users.index')->with('create-user', $user->name);
     }
 
     /**
@@ -60,7 +67,7 @@ class UserController// extends Controller
      */
     public function edit(User $user)
     {
-        //
+        return view('user.form', ['user' => $user]);
     }
 
     /**
@@ -72,7 +79,13 @@ class UserController// extends Controller
      */
     public function update(UpdateUser $request, User $user)
     {
-        //
+        $user->name = $request->name;
+        $user->email = $request->email;
+        $user->password = !empty($request->password) ? bcrypt($request->password) : $user->password;
+        $user->save();
+
+        // Перенаправление на индексную страницу с уведомление об успешном добавлении
+        return redirect()->route('users.index')->with('update-user', $user->name);
     }
 
     /**
@@ -83,6 +96,8 @@ class UserController// extends Controller
      */
     public function destroy(User $user)
     {
-        //
+        $user->delete();
+        // Перенаправление на индексную страницу с уведомление об успешном добавлении
+        return redirect()->route('users.index')->with('delete-user', $user->name);
     }
 }

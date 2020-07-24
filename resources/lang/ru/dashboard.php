@@ -16,6 +16,12 @@ return [
     'delete' => 'Удалить',
     'save' => 'Сохранить',
 
+    'new_user' => 'Новый Пользователь',
+    'user_name' => 'Имя пользователя',
+    'user_name_placeholder' => 'Введите имя пользователя',
+    'email_placepolder' => 'Введите email пользователя',
+    'password_placeholder' => 'Введите пароль',
+
     'logo' => 'Логотип',
     'select_logo' => 'Выберете файл логотипа',
 
