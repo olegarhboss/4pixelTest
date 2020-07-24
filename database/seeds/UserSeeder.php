@@ -18,5 +18,7 @@ class UserSeeder extends Seeder
             'email' => 'admin@test.loc',
             'password' => Hash::make('password')
         ]);
+
+        $users = factory(App\User::class, 15)->create();
     }
 }
