@@ -17,7 +17,7 @@ class DepartamentController// extends Controller
      */
     public function index()
     {
-        return view('departament.index', ['departaments' => Departament::paginate(4)]);
+        return view('departament.index', ['departaments' => Departament::orderByDesc('id')->paginate(4)]);
     }
 
     /**
