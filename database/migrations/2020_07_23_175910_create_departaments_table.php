@@ -3,7 +3,6 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
-use Illuminate\Database\Query\Expression;
 
 class CreateDepartamentsTable extends Migration
 {
@@ -18,7 +17,7 @@ class CreateDepartamentsTable extends Migration
             $table->id();
             $table->string('name');
             $table->text('description');
-            $table->json('logo')->default(new Expression('(JSON_ARRAY())'));
+            $table->string('logo');
             $table->timestamps();
         });
 

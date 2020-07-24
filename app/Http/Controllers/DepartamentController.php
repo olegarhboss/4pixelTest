@@ -4,9 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Models\Departament;
 //use Illuminate\Http\Request;
-
 use App\Http\Requests\StoreDepartament;
 use App\Http\Requests\UpdateDepartament;
+use Illuminate\Support\Facades\Storage;
 
 class DepartamentController// extends Controller
 {
@@ -17,7 +17,7 @@ class DepartamentController// extends Controller
      */
     public function index()
     {
-        //
+        return view('departament.index', ['departaments' => Departament::paginate(4)]);
     }
 
     /**
@@ -27,7 +27,7 @@ class DepartamentController// extends Controller
      */
     public function create()
     {
-        //
+        return view('departament.form');
     }
 
     /**
@@ -38,7 +38,17 @@ class DepartamentController// extends Controller
      */
     public function store(StoreDepartament $request)
     {
-        //
+        // Создание нового Отдела
+        $departament = Departament::create([
+            'name' => $request->name,
+            'description' => $request->description,
+            'logo' => $request->logo->store('logo')
+        ]);
+
+        // Привязка пользователей к отделу
+        $departament->users()->sync($request->users);
+        // Перенаправление на индексную страницу с уведомление об успешном добавлении
+        return redirect()->route('departaments.index')->with('create-departament', $departament->name);
     }
 
     /**
@@ -60,7 +70,7 @@ class DepartamentController// extends Controller
      */
     public function edit(Departament $departament)
     {
-        //
+        return view('departament.form', ['departament' => $departament]);
     }
 
     /**
@@ -72,7 +82,25 @@ class DepartamentController// extends Controller
      */
     public function update(UpdateDepartament $request, Departament $departament)
     {
-        //
+        // Обновление названия Отдела
+        $departament->name = $request->name;
+        // Обновление описания отдела
+        $departament->description = $request->description;
+        // Привязка пользователей к отделу
+        $departament->users()->sync($request->users);
+
+        // Если добален новый логотип
+        if ($request->has('logo')){
+            // Удалить файл старого
+            Storage::delete($departament->logo);
+            // Сохранить новый
+            $departament->logo = $request->logo->store('logo');
+        }
+        
+        // Сохранение обновлённого экземпляра модели Отдела
+        $departament->save();
+        // Перенаправление на индексную страницу с уведомление об успешном обновлении
+        return redirect()->route('departaments.index')->with('update-departament', $request->name);
     }
 
     /**
@@ -83,6 +111,11 @@ class DepartamentController// extends Controller
      */
     public function destroy(Departament $departament)
     {
-        //
+        // Удаление файла логотипа
+        Storage::delete($departament->logo);
+        // Удаление экземпляра модели
+        $departament->delete();
+        // Перенаправление на индексную страницу с уведомление об успешном удалении
+        return redirect()->route('departaments.index')->with('delete-departament', $departament->name);
     }
 }

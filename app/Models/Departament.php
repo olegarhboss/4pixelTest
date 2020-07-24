@@ -8,6 +8,14 @@ class Departament extends Model
 {
     protected $touches = ['users'];
 
+    protected $fillable = [
+        'name', 'description', 'logo',
+    ];
+
+    protected $with = [
+        'users'
+    ];
+
     // Пользователи входящие в отдел
     public function users()
     {

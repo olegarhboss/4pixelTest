@@ -13,7 +13,7 @@ class StoreDepartament extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -24,7 +24,7 @@ class StoreDepartament extends FormRequest
     public function rules()
     {
         return [
-            'name' => 'required|string',
+            'name' => 'required|string|unique:departaments|max:255',
             'description' => 'required|string',
             'logo' => 'required|image|mimes:jpeg,png|max:16384',
         ];
